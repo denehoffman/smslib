@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "smslib"
-version = "0.1.0"
+version = "1.0.0"
 description = "Python library for sending SMS messages via email-to-SMS gateways"
 license = {file = "LICENSE"}
 requires-python = ">=3.7"
@@ -29,16 +29,14 @@ classifiers = [
   "Topic :: System :: Monitoring"
 ]
 keywords = ["SMS", "text messages", "email-to-SMS gateway"]
+readme = "README.md"
 
 [project.urls]
 homepage = "https://github.com/denehoffman/smslib"
 repository = "https://github.com/denehoffman/smslib"
 documentation = "https://github.com/denehoffman/smslib/blob/main/README.md"
 
-[project.readme]
-file = "README.md"
-
-[project.authors]
+[[project.authors]]
 name = "Nathaniel Dene Hoffman"
 email = "dene@cmu.edu"
 
