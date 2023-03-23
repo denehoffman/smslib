@@ -16,23 +16,26 @@ class Notifier:
         if optpath:
             self.rcpath = _Path(optpath)
         if self.rcpath.exists():
-            print("exists")
             self.rcconfig = _tomllib.loads(self.rcpath.read_text(encoding="utf-8"))
         else:
             self.rcconfig = {"senders": dict(), "receivers": dict()}
 
     def cli(self):
-        parser = _argparse.ArgumentParser()
-        parser.add_argument("message")
-        parser.add_argument("--sender")
-        parser.add_argument("--receiver")
-        parser.add_argument("--email")
-        parser.add_argument("--password")
-        parser.add_argument("--smtp-server")
-        parser.add_argument("--port", default=587)
-        parser.add_argument("--phone-number")
-        parser.add_argument("--provider")
-        parser.add_argument("--confirm", action="store_true")
+        desc_string = f"""Send an SMS via email
+
+Available SMS providers: {', '.join(_Receiver.GATEWAYS.keys())}
+        """
+        parser = _argparse.ArgumentParser(description=desc_string)
+        parser.add_argument("message", help="Message string to send")
+        parser.add_argument("--sender", help=f"Sender name from {self.rcpath}")
+        parser.add_argument("--receiver", help=f"Receiver name from {self.rcpath}")
+        parser.add_argument("--email", help="Sender's email address")
+        parser.add_argument("--password", help="Sender's password")
+        parser.add_argument("--smtp-server", help="Sender's SMTP server")
+        parser.add_argument("--port", default=587, help="Sender's SMTP server port")
+        parser.add_argument("--phone-number", help="Receiver's phone number")
+        parser.add_argument("--provider", help="Receiver's phone provider")
+        parser.add_argument("--confirm", action="store_true", help="Print confirmation after sending message")
         args = parser.parse_args()
         rcsenders = self.rcconfig.get("senders", dict())
         rcreceivers = self.rcconfig.get("receivers", dict())
