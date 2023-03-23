@@ -1,27 +1,28 @@
-from smslib import Sender, Receiver
-import argparse
-import getpass
-from pathlib import Path
+from smslib import Sender as _Sender
+from smslib import Receiver as _Receiver
+import argparse as _argparse
+import getpass as _getpass
+from pathlib import Path as _Path
 try:
-    import tomllib
+    import tomllib as _tomllib
 except ModuleNotFoundError:
-    import tomli as tomllib
-import os
+    import tomli as _tomllib
+import os as _os
 
 class Notifier:
     def __init__(self):
-        self.rcpath = Path.home() / Path(".smslibrc.toml")
-        optpath = os.getenv("SMSLIBRC")
+        self.rcpath = _Path.home() / _Path(".smslibrc.toml")
+        optpath = _os.getenv("SMSLIBRC")
         if optpath:
-            self.rcpath = Path(optpath)
+            self.rcpath = _Path(optpath)
         if self.rcpath.exists():
             print("exists")
-            self.rcconfig = tomllib.loads(self.rcpath.read_text(encoding="utf-8"))
+            self.rcconfig = _tomllib.loads(self.rcpath.read_text(encoding="utf-8"))
         else:
             self.rcconfig = {"senders": dict(), "receivers": dict()}
 
     def cli(self):
-        parser = argparse.ArgumentParser()
+        parser = _argparse.ArgumentParser()
         parser.add_argument("message")
         parser.add_argument("--sender")
         parser.add_argument("--receiver")
@@ -71,22 +72,22 @@ class Notifier:
         while not sender_email:
             sender_email = input("Enter the sender's email address: ")
         while not sender_password:
-            sender_password = getpass.getpass(prompt="Enter the sender's email password: ")
+            sender_password = _getpass.getpass(prompt="Enter the sender's email password: ")
         while not sender_smtp_server:
             sender_smtp_server = input("Enter the sender's SMTP server: ")
-        sender = Sender(sender_email, sender_password, sender_smtp_server, sender_port)
+        sender = _Sender(sender_email, sender_password, sender_smtp_server, sender_port)
         sender.check_credentials()
         receiver = None
         if not receiver_email:
             while not receiver_phone_number:
                 receiver_phone_number = input("Enter the receiver's phone number: ")
             if not receiver_provider:
-                print(f"Available providers: {', '.join(Receiver.GATEWAYS.keys())}")
+                print(f"Available providers: {', '.join(_Receiver.GATEWAYS.keys())}")
             while not receiver_provider:
                 receiver_provider = input("Enter the receiver's phone service provider: ")
-            receiver = Receiver(receiver_phone_number, receiver_provider)
+            receiver = _Receiver(receiver_phone_number, receiver_provider)
         else:
-            receiver = Receiver(None, None, email=receiver_email)
+            receiver = _Receiver(None, None, email=receiver_email)
         sender.send_message(args.message, receiver)
         if args.confirm:
             print("Message sent!")

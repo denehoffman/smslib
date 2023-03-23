@@ -1,4 +1,4 @@
-import re
+import re as _re
 
 class Receiver:
     GATEWAYS = {
@@ -31,7 +31,7 @@ class Receiver:
         if phone_number is None:
             return None
         # Regex to match common US phone patterns
-        phone_regex = re.compile(r'(?:\+1-)?(\d{3})[-.\s]?(\d{3})[-.\s]?(\d{4})')
+        phone_regex = _re.compile(r'(?:\+1-)?(\d{3})[-.\s]?(\d{3})[-.\s]?(\d{4})')
         match = phone_regex.search(phone_number)
         if match:
             return match.group(1) + match.group(2) + match.group(3)
