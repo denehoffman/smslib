@@ -12,7 +12,35 @@ version = "0.1.0"
 description = "Python library for sending SMS messages via email-to-SMS gateways"
 license = {file = "LICENSE"}
 requires-python = ">=3.7"
-dependencies = []
+dependencies = [
+ 'tomli>=2.0.1; python_version < "3.11"'
+]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Communications :: Telephony",
+  "Topic :: System :: Monitoring"
+]
+keywords = ["SMS", "text messages", "email-to-SMS gateway"]
+
+[project.urls]
+homepage = "https://github.com/denehoffman/smslib"
+repository = "https://github.com/denehoffman/smslib"
+documentation = "https://github.com/denehoffman/smslib/blob/main/README.md"
+
+[project.readme]
+file = "README.md"
+
+[project.authors]
+name = "Nathaniel Dene Hoffman"
+email = "dene@cmu.edu"
 
 [project.scripts]
 notify = "smslib.notify:main"
