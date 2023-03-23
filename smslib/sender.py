@@ -36,11 +36,11 @@ class Sender:
             print("If you are using GMail with 2FA, you need to make")
             print("an App Password to use this package!")
 
-    def send_message(self, message, receiver):
+    def send_message(self, message, receiver, context=None):
         to_email = receiver.email
         try:
             with _smtplib.SMTP(self.smtp_server, self.port) as server:
-                server.starttls()
+                server.starttls(context=context)
                 server.login(self.email, self.password)
                 server.sendmail(self.email, to_email, message)
         except _smtplib.SMTPAuthenticationError as e:
